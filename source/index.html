@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <title>My Webcam (作者:羽山 http://3wa.tw) </title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+  <script language="javascript" src="js/jquery.js"></script>
+  <script language="javascript" src="js/php.js"></script>
+  <script language="javascript" src="js/html5-qrcode.js"></script>
+  <script language="javascript" src="js/mybox.js"></script>
+  <script language="javascript" src="js/include.js"></script>
+    
+  <style>
+  img[alt='Info icon']{
+    display:none;
+  }
+  </style>
+
+
+</head>
+<body>
+<center>
+  My Webcam
+</center>
+  <input type="button" value="Reload" onClick="location.replace('?');">  
+  <div style="width: 500px" id="reader"></div>
+  <div reqc="output_txt"></div>
+</center>
+</body>
+<script>
+function onScanSuccess(decodedText, decodedResult) {
+    // Handle on success condition with the decoded text or result.
+    clearTimeout(window['sTimeout']);
+    console.log(`Scan result: ${decodedText}`, decodedResult);
+    $("div[reqc='output_txt']").empty().fadeIn();
+    $("div[reqc='output_txt']").html(decodedText);
+    window['sTimeout'] = setTimeout(function(){
+        $("div[reqc='output_txt']").fadeOut();
+    },3000);
+}
+
+var html5QrcodeScanner = new Html5QrcodeScanner(
+	"reader", { fps: 10, qrbox: 250 });
+html5QrcodeScanner.render(onScanSuccess);
+</script>
+</html>
